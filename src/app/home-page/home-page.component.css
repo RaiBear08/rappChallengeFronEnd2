@@ -1,7 +1,19 @@
 #divEvent{
     border:1.5px solid black;
     border-radius: 15px;
-    width: 80%;
+    width: 60%;
     padding: 20px;
     margin:auto;
+}
+
+
+#divTable{
+    width: 80%;
+    margin:auto;
+}
+
+#divTime{
+    width: 80%;
+    margin:auto;
+    border-radius: 15px;
 }

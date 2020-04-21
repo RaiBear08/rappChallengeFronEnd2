@@ -1,4 +1,4 @@
-<h4 style="text-align: center;">Add Event</h4>
+<h2 style="text-align: center;">Add Event</h2><br>
 <form [formGroup] = "EventFormGroup" (ngSubmit)="addEvent()">
 <div class="form-group row">
     <div class="col-sm-1"></div>
@@ -35,5 +35,8 @@
 <p *ngIf="success != ''" class="success">{{success}}</p>
 <div class="col-md-12 text-center">
 <button type="submit" class="btn btn-primary myBtn btn-lg">Save</button>
+
 </div>
+
 </form>
+<!-- <button  class="btn btn-primary myBtn btn-lg" (click)="TestEvent()">Test</button> -->

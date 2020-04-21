@@ -24,4 +24,11 @@ export class ViewEventsComponent implements OnInit {
    {
      this.eventService.getAllEvents().subscribe(data => this.allEvents = data);
    }
+
+   FilterTable()
+   {
+     console.log("was here");
+     this.allEvents = null;
+     console.log( this.allEvents);
+   }
 }

@@ -5,7 +5,7 @@ import { EventModel } from '../model/EventModel';
 import {EventsService} from '../events.service';
 import { DatePipe } from '@angular/common'
 import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-form-event',
@@ -20,8 +20,8 @@ export class FormEventComponent implements OnInit {
   eventDate: string;
   eventTime: string;
   success :string;
-  strTime:any;
-  strTime2:string;
+  strTimeVT:any;
+  strTimeVT2:any;
   //set batch object
   //set address
   EventFormGroup = new FormGroup({
@@ -31,12 +31,12 @@ export class FormEventComponent implements OnInit {
     eventTime: new FormControl("", Validators.required )
   });
 
-  constructor(private eventService:EventsService,private datepipe: DatePipe,private router:Router) { }
+  constructor(private eventService:EventsService,private datepipe: DatePipe,private router:Router,private http: HttpClient) { }
 
   ngOnInit(): void {
     
-this.eventService.getTime2("7:45").subscribe(data => this.strTime2=data ,error => console.log(error))
-console.log("constructor " + this.strTime2);
+  // this.eventService.getTime("7:45").subscribe(data => this.strTime2=data ,error => console.log(error))
+  // console.log("constructor " + this.strTime2);
 
   }
 
@@ -49,17 +49,26 @@ eventObject.eventdate = this.EventFormGroup.value.eventDate;
 let latest_date2:string = this.EventFormGroup.value.eventTime;
 console.log("before " + latest_date2);
 
-this.eventService.getTime2(latest_date2).subscribe(data => this.strTime2=data ,error => console.log(error))
+this.strTimeVT = latest_date2;
+this.eventService.getTime(latest_date2).subscribe(data => {sessionStorage.setItem('strTime', data);console.log(data)} ,error => console.log(error));
+this.strTimeVT = sessionStorage.getItem('strTime');
 
-console.log("after time " + this.strTime2);
+eventObject.eventtime = this.strTimeVT;
 
-eventObject.eventtime =this.strTime2;
-//this.eventService.createPost(eventObject).subscribe(data => console.log(data), error => console.log(error))
+this.eventService.createPost(eventObject).subscribe(data => console.log(data), error => console.log(error))
+
+
 
 this.router.navigateByUrl('/event', { skipLocationChange: true }).then(() => {
   this.router.navigate(['home']);
 }); 
 
+}
+
+
+TestEvent(){
+  this.strTimeVT = sessionStorage.getItem('strTime');
+  console.log("TestEvent: " + this.strTimeVT);
 }
 
 }
